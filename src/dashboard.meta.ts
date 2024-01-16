@@ -1,6 +1,6 @@
 export const dashboardMeta = {
-  slot: 'patient-chart-appointments-dashboard-slot',
+  slot: "patient-chart-appointments-dashboard-slot",
   columns: 1,
-  title: 'Appointments',
-  path: 'Appointments',
+  title: "Appointments",
+  path: "Appointments",
 };

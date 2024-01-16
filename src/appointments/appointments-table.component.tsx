@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
-import classNames from 'classnames';
-import dayjs from 'dayjs';
-const utc = require('dayjs/plugin/utc');
+import React, { useEffect, useMemo } from "react";
+import classNames from "classnames";
+import dayjs from "dayjs";
+const utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import {
   DataTable,
   type DataTableHeader,
@@ -14,12 +14,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@carbon/react';
-import { PatientChartPagination } from '@openmrs/esm-patient-common-lib';
-import { formatDatetime, parseDate, useLayoutType, usePagination } from '@openmrs/esm-framework';
-import { type Appointment } from '../types';
-import { AppointmentsActionMenu } from './appointments-action-menu.component';
-import styles from './appointments-table.scss';
+} from "@carbon/react";
+import { PatientChartPagination } from "@openmrs/esm-patient-common-lib";
+import {
+  formatDatetime,
+  parseDate,
+  useLayoutType,
+  usePagination,
+} from "@openmrs/esm-framework";
+import { type Appointment } from "../types";
+import { AppointmentsActionMenu } from "./appointments-action-menu.component";
+import styles from "./appointments-table.scss";
 
 const pageSize = 10;
 
@@ -37,8 +42,12 @@ const AppointmentsTable: React.FC<AppointmentTableProps> = ({
   setSwitchedView,
 }) => {
   const { t } = useTranslation();
-  const { results: paginatedAppointments, currentPage, goTo } = usePagination(patientAppointments, pageSize);
-  const isTablet = useLayoutType() === 'tablet';
+  const {
+    results: paginatedAppointments,
+    currentPage,
+    goTo,
+  } = usePagination(patientAppointments, pageSize);
+  const isTablet = useLayoutType() === "tablet";
 
   useEffect(() => {
     if (switchedView && currentPage !== 1) {
@@ -48,14 +57,14 @@ const AppointmentsTable: React.FC<AppointmentTableProps> = ({
 
   const tableHeaders: Array<typeof DataTableHeader> = useMemo(
     () => [
-      { key: 'date', header: t('date', 'Date') },
-      { key: 'location', header: t('location', 'Location') },
-      { key: 'service', header: t('service', 'Service') },
-      { key: 'status', header: t('status', 'Status') },
-      { key: 'type', header: t('type', 'Type') },
-      { key: 'notes', header: t('notes', 'Notes') },
+      { key: "date", header: t("date", "Date") },
+      { key: "location", header: t("location", "Location") },
+      { key: "service", header: t("service", "Service") },
+      { key: "status", header: t("status", "Status") },
+      { key: "type", header: t("type", "Type") },
+      { key: "notes", header: t("notes", "Notes") },
     ],
-    [t],
+    [t]
   );
 
   const tableRows = useMemo(
@@ -63,20 +72,32 @@ const AppointmentsTable: React.FC<AppointmentTableProps> = ({
       paginatedAppointments?.map((appointment) => {
         return {
           id: appointment.uuid,
-          date: formatDatetime(parseDate(appointment.startDateTime), { mode: 'wide' }),
-          location: appointment?.location?.name ? appointment?.location?.name : '——',
+          date: formatDatetime(parseDate(appointment.startDateTime), {
+            mode: "wide",
+          }),
+          location: appointment?.location?.name
+            ? appointment?.location?.name
+            : "——",
           service: appointment.service.name,
           status: appointment.status,
-          type: appointment.appointmentKind ? appointment.appointmentKind : '——',
-          notes: appointment.comments ? appointment.comments : '——',
+          type: appointment.appointmentKind
+            ? appointment.appointmentKind
+            : "——",
+          notes: appointment.comments ? appointment.comments : "——",
         };
       }),
-    [paginatedAppointments],
+    [paginatedAppointments]
   );
 
   return (
     <div>
-      <DataTable rows={tableRows} headers={tableHeaders} isSortable size={isTablet ? 'lg' : 'sm'} useZebraStyles>
+      <DataTable
+        rows={tableRows}
+        headers={tableHeaders}
+        isSortable
+        size={isTablet ? "lg" : "sm"}
+        useZebraStyles
+      >
         {({ rows, headers, getHeaderProps, getTableProps }) => (
           <TableContainer>
             <Table {...getTableProps()}>
@@ -84,7 +105,10 @@ const AppointmentsTable: React.FC<AppointmentTableProps> = ({
                 <TableRow>
                   {headers.map((header) => (
                     <TableHeader
-                      className={classNames(styles.productiveHeading01, styles.text02)}
+                      className={classNames(
+                        styles.productiveHeading01,
+                        styles.text02
+                      )}
                       {...getHeaderProps({
                         header,
                         isSortable: header.isSortable,
@@ -100,10 +124,15 @@ const AppointmentsTable: React.FC<AppointmentTableProps> = ({
                 {rows.map((row, i) => (
                   <TableRow key={row.id}>
                     {row.cells.map((cell) => (
-                      <TableCell key={cell.id}>{cell.value?.content ?? cell.value}</TableCell>
+                      <TableCell key={cell.id}>
+                        {cell.value?.content ?? cell.value}
+                      </TableCell>
                     ))}
                     <TableCell className="cds--table-column-menu">
-                      <AppointmentsActionMenu appointment={paginatedAppointments[i]} patientUuid={patientUuid} />
+                      <AppointmentsActionMenu
+                        appointment={paginatedAppointments[i]}
+                        patientUuid={patientUuid}
+                      />
                     </TableCell>
                   </TableRow>
                 ))}
