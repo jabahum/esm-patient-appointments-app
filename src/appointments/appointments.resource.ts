@@ -1,28 +1,32 @@
-import dayjs from 'dayjs';
-import useSWR from 'swr';
-import { openmrsFetch } from '@openmrs/esm-framework';
+import dayjs from "dayjs";
+import useSWR from "swr";
+import { openmrsFetch } from "@openmrs/esm-framework";
 import {
   type AppointmentPayload,
   type AppointmentService,
   type AppointmentsFetchResponse,
   type RecurringAppointmentsPayload,
-} from '../types';
-import isToday from 'dayjs/plugin/isToday';
+} from "../types";
+import isToday from "dayjs/plugin/isToday";
 dayjs.extend(isToday);
 
 const appointmentsSearchUrl = `/ws/rest/v1/appointments/search`;
 
-export function useAppointments(patientUuid: string, startDate: string, abortController: AbortController) {
+export function useAppointments(
+  patientUuid: string,
+  startDate: string,
+  abortController: AbortController,
+) {
   /*
     SWR isn't meant to make POST requests for data fetching. This is a consequence of the API only exposing this resource via POST.
     This works but likely isn't recommended.
   */
   const fetcher = () =>
     openmrsFetch(appointmentsSearchUrl, {
-      method: 'POST',
+      method: "POST",
       signal: abortController.signal,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: {
         patientUuid: patientUuid,
@@ -30,32 +34,40 @@ export function useAppointments(patientUuid: string, startDate: string, abortCon
       },
     });
 
-  const { data, error, isLoading, isValidating, mutate } = useSWR<AppointmentsFetchResponse, Error>(
-    appointmentsSearchUrl,
-    fetcher,
-  );
+  const { data, error, isLoading, isValidating, mutate } = useSWR<
+    AppointmentsFetchResponse,
+    Error
+  >(appointmentsSearchUrl, fetcher);
 
   const appointments = data?.data?.length ? data.data : null;
 
   const pastAppointments = appointments
     ?.sort((a, b) => (b.startDateTime > a.startDateTime ? 1 : -1))
-    ?.filter(({ status }) => status !== 'Cancelled')
+    ?.filter(({ status }) => status !== "Cancelled")
     ?.filter(({ startDateTime }) =>
-      dayjs(new Date(startDateTime).toISOString()).isBefore(new Date().setHours(0, 0, 0, 0)),
+      dayjs(new Date(startDateTime).toISOString()).isBefore(
+        new Date().setHours(0, 0, 0, 0),
+      ),
     );
 
   const upcomingAppointments = appointments
     ?.sort((a, b) => (a.startDateTime > b.startDateTime ? 1 : -1))
-    ?.filter(({ status }) => status !== 'Cancelled')
-    ?.filter(({ startDateTime }) => dayjs(new Date(startDateTime).toISOString()).isAfter(new Date()));
+    ?.filter(({ status }) => status !== "Cancelled")
+    ?.filter(({ startDateTime }) =>
+      dayjs(new Date(startDateTime).toISOString()).isAfter(new Date()),
+    );
 
   const todaysAppointments = appointments
     ?.sort((a, b) => (a.startDateTime > b.startDateTime ? 1 : -1))
-    ?.filter(({ status }) => status !== 'Cancelled')
-    ?.filter(({ startDateTime }) => dayjs(new Date(startDateTime).toISOString()).isToday());
+    ?.filter(({ status }) => status !== "Cancelled")
+    ?.filter(({ startDateTime }) =>
+      dayjs(new Date(startDateTime).toISOString()).isToday(),
+    );
 
   return {
-    data: data ? { pastAppointments, upcomingAppointments, todaysAppointments } : null,
+    data: data
+      ? { pastAppointments, upcomingAppointments, todaysAppointments }
+      : null,
     isError: error,
     isLoading,
     isValidating,
@@ -64,10 +76,10 @@ export function useAppointments(patientUuid: string, startDate: string, abortCon
 }
 
 export function useAppointmentService() {
-  const { data, error, isLoading } = useSWR<{ data: Array<AppointmentService> }, Error>(
-    `/ws/rest/v1/appointmentService/all/full`,
-    openmrsFetch,
-  );
+  const { data, error, isLoading } = useSWR<
+    { data: Array<AppointmentService> },
+    Error
+  >(`/ws/rest/v1/appointmentService/all/full`, openmrsFetch);
 
   return {
     data: data ? data.data : null,
@@ -76,12 +88,15 @@ export function useAppointmentService() {
   };
 }
 
-export function saveAppointment(appointment: AppointmentPayload, abortController: AbortController) {
+export function saveAppointment(
+  appointment: AppointmentPayload,
+  abortController: AbortController,
+) {
   return openmrsFetch(`/ws/rest/v1/appointment`, {
-    method: 'POST',
+    method: "POST",
     signal: abortController.signal,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: appointment,
   });
@@ -92,16 +107,19 @@ export function saveRecurringAppointments(
   abortController: AbortController,
 ) {
   return openmrsFetch(`/ws/rest/v1/recurring-appointments`, {
-    method: 'POST',
+    method: "POST",
     signal: abortController.signal,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: recurringAppointments,
   });
 }
 
-export function getAppointmentsByUuid(appointmentUuid: string, abortController: AbortController) {
+export function getAppointmentsByUuid(
+  appointmentUuid: string,
+  abortController: AbortController,
+) {
   return openmrsFetch(`/ws/rest/v1/appointments/${appointmentUuid}`, {
     signal: abortController.signal,
   });
@@ -113,14 +131,18 @@ export function getAppointmentService(abortController: AbortController, uuid) {
   });
 }
 
-export const cancelAppointment = async (toStatus: string, appointmentUuid: string, ac: AbortController) => {
-  const omrsDateFormat = 'YYYY-MM-DDTHH:mm:ss.SSSZZ';
+export const cancelAppointment = async (
+  toStatus: string,
+  appointmentUuid: string,
+  ac: AbortController,
+) => {
+  const omrsDateFormat = "YYYY-MM-DDTHH:mm:ss.SSSZZ";
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const statusChangeTime = dayjs(new Date()).format(omrsDateFormat);
   const url = `/ws/rest/v1/appointments/${appointmentUuid}/status-change`;
   return await openmrsFetch(url, {
     body: { toStatus, onDate: statusChangeTime, timeZone: timeZone },
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
   });
 };

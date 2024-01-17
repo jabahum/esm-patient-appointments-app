@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
-import { showSnackbar } from '@openmrs/esm-framework';
-import { cancelAppointment, useAppointments } from './appointments.resource';
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Button, ModalBody, ModalFooter, ModalHeader } from "@carbon/react";
+import { showSnackbar } from "@openmrs/esm-framework";
+import { cancelAppointment, useAppointments } from "./appointments.resource";
 
 interface CancelAppointmentModalProps {
   closeCancelModal: () => void;
@@ -16,30 +16,37 @@ const CancelAppointmentModal: React.FC<CancelAppointmentModalProps> = ({
   patientUuid,
 }) => {
   const { t } = useTranslation();
-  const { mutate } = useAppointments(patientUuid, new Date().toUTCString(), new AbortController());
+  const { mutate } = useAppointments(
+    patientUuid,
+    new Date().toUTCString(),
+    new AbortController(),
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleCancel = async () => {
     const abortController = new AbortController();
     setIsSubmitting(true);
 
-    cancelAppointment('Cancelled', appointmentUuid, abortController)
+    cancelAppointment("Cancelled", appointmentUuid, abortController)
       .then(({ status }) => {
         if (status === 200) {
           mutate();
           closeCancelModal();
           showSnackbar({
             isLowContrast: true,
-            kind: 'success',
-            subtitle: t('appointmentCancelledSuccessfully', 'Appointment cancelled successfully'),
-            title: t('appointmentCancelled', 'Appointment cancelled'),
+            kind: "success",
+            subtitle: t(
+              "appointmentCancelledSuccessfully",
+              "Appointment cancelled successfully",
+            ),
+            title: t("appointmentCancelled", "Appointment cancelled"),
           });
         }
       })
       .catch((err) => {
         showSnackbar({
-          title: t('appointmentCancelError', 'Error cancelling appointment'),
-          kind: 'error',
+          title: t("appointmentCancelError", "Error cancelling appointment"),
+          kind: "error",
           isLowContrast: true,
           subtitle: err?.message,
         });
@@ -48,16 +55,24 @@ const CancelAppointmentModal: React.FC<CancelAppointmentModalProps> = ({
 
   return (
     <div>
-      <ModalHeader closeModal={closeCancelModal} title={t('cancelAppointment', 'Cancel appointment')} />
+      <ModalHeader
+        closeModal={closeCancelModal}
+        title={t("cancelAppointment", "Cancel appointment")}
+      />
       <ModalBody>
-        <p>{t('cancelAppointmentModalConfirmationText', 'Are you sure you want to cancel this appointment?')}</p>
+        <p>
+          {t(
+            "cancelAppointmentModalConfirmationText",
+            "Are you sure you want to cancel this appointment?",
+          )}
+        </p>
       </ModalBody>
       <ModalFooter>
         <Button kind="secondary" onClick={closeCancelModal}>
-          {t('discard', 'Discard')}
+          {t("discard", "Discard")}
         </Button>
         <Button kind="danger" onClick={handleCancel} disabled={isSubmitting}>
-          {t('cancelAppointment', 'Cancel appointment')}
+          {t("cancelAppointment", "Cancel appointment")}
         </Button>
       </ModalFooter>
     </div>
