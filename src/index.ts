@@ -13,10 +13,10 @@ export const importTranslation = require.context(
   "../translations",
   false,
   /.json$/,
-  "lazy"
+  "lazy",
 );
 
-const moduleName = "@openmrs/esm-patient-appointments-app";
+const moduleName = "@ugandaemr/esm-patient-appointments-app";
 
 const options = {
   featureName: "patient-appointments",
@@ -29,31 +29,31 @@ export function startupApp() {
 
 export const appointmentsOverview = getSyncLifecycle(
   appointmentsOverviewComponent,
-  options
+  options,
 );
 
 export const appointmentsDetailedSummary = getSyncLifecycle(
   appointmentsDetailedSummaryComponent,
-  options
+  options,
 );
 
 // t('Appointments', 'Appointments')
 export const appointmentsSummaryDashboardLink = getSyncLifecycle(
   createDashboardLink({ ...dashboardMeta, moduleName }),
-  options
+  options,
 );
 
 export const appointmentsFormWorkspace = getAsyncLifecycle(
   () => import("./appointments/appointments-form/appointments-form.component"),
-  options
+  options,
 );
 
 export const appointmentsCancelConfirmationDialog = getAsyncLifecycle(
   () => import("./appointments/appointments-cancel-modal.component"),
-  options
+  options,
 );
 
 export const upcomingAppointmentsWidget = getSyncLifecycle(
   upcomingAppointmentsWidgetComponent,
-  options
+  options,
 );

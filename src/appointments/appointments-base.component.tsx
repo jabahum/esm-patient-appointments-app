@@ -112,7 +112,7 @@ const AppointmentsBase: React.FC<AppointmentsBaseProps> = ({ patientUuid }) => {
                   <p className={styles.content}>
                     {t(
                       "noUpcomingAppointmentsForPatient",
-                      "There are no upcoming appointments to display for this patient"
+                      "There are no upcoming appointments to display for this patient",
                     )}
                   </p>
                 </Tile>
@@ -137,7 +137,7 @@ const AppointmentsBase: React.FC<AppointmentsBaseProps> = ({ patientUuid }) => {
                   <p className={styles.content}>
                     {t(
                       "noCurrentAppointments",
-                      "There are no appointments scheduled for today to display for this patient"
+                      "There are no appointments scheduled for today to display for this patient",
                     )}
                   </p>
                 </Tile>
@@ -163,7 +163,7 @@ const AppointmentsBase: React.FC<AppointmentsBaseProps> = ({ patientUuid }) => {
                   <p className={styles.content}>
                     {t(
                       "noPastAppointments",
-                      "There are no past appointments to display for this patient"
+                      "There are no past appointments to display for this patient",
                     )}
                   </p>
                 </Tile>

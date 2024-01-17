@@ -94,8 +94,8 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
   const defaultTimeFormat = appointment?.startDateTime
     ? editedAppointmentTimeFormat
     : new Date().getHours() >= 12
-    ? "PM"
-    : "AM";
+      ? "PM"
+      : "AM";
   const { t } = useTranslation();
   const isTablet = useLayoutType() === "tablet";
   const locations = useLocations();
@@ -112,7 +112,7 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
   const { mutate } = useAppointments(
     patientUuid,
     new Date().toUTCString(),
-    new AbortController()
+    new AbortController(),
   );
 
   const defaultStartDate = appointment?.startDateTime
@@ -169,13 +169,13 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
             })
             .join(", ");
         }
-      })()
+      })(),
     );
     setValue(
       "recurringPatternDaysOfWeek",
       e.selectedItems.map((s) => {
         return s.id;
-      })
+      }),
     );
   };
 
@@ -185,7 +185,7 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
     } else {
       return weekDays
         .filter((weekDay) =>
-          getValues("recurringPatternDaysOfWeek").includes(weekDay.id)
+          getValues("recurringPatternDaysOfWeek").includes(weekDay.id),
         )
         .map((weekDay) => {
           return weekDay.label;
@@ -223,7 +223,7 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
             kind: "success",
             subtitle: t(
               "appointmentNowVisible",
-              "It is now visible on the Appointments page"
+              "It is now visible on the Appointments page",
             ),
             title:
               context === "editing"
@@ -255,12 +255,12 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
           isLowContrast: false,
           subtitle: error?.message,
         });
-      }
+      },
     );
   };
 
   const constructAppointmentPayload = (
-    data: AppointmentFormData
+    data: AppointmentFormData,
   ): AppointmentPayload => {
     const {
       selectedService,
@@ -274,7 +274,7 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
     } = data;
 
     const serviceUuid = services?.find(
-      (service) => service.name === selectedService
+      (service) => service.name === selectedService,
     )?.uuid;
     const [hours, minutes] = convertTime12to24(startTime, timeFormat);
     const startDatetime = startDate.setHours(hours, minutes);
@@ -295,7 +295,7 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
   };
 
   const constructRecurringPattern = (
-    data: AppointmentFormData
+    data: AppointmentFormData,
   ): RecurringPattern => {
     const {
       appointmentDateTime: { recurringPatternEndDate },
@@ -328,43 +328,6 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
     <Form className={styles.formWrapper}>
       <Stack gap={4}>
         <section className={styles.formGroup}>
-          <span className={styles.heading}>{t("location", "Location")}</span>
-          <div>
-            <ResponsiveWrapper isTablet={isTablet}>
-              <Controller
-                name="location"
-                control={control}
-                render={({ field: { onChange, value, onBlur, ref } }) => (
-                  <Select
-                    id="location"
-                    invalidText="Required"
-                    labelText={t("selectLocation", "Select a location")}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    ref={ref}
-                  >
-                    <SelectItem
-                      text={t("chooseLocation", "Choose a location")}
-                      value=""
-                    />
-                    {locations?.length > 0 &&
-                      locations.map((location) => (
-                        <SelectItem
-                          key={location.uuid}
-                          text={location.display}
-                          value={location.uuid}
-                        >
-                          {location.display}
-                        </SelectItem>
-                      ))}
-                  </Select>
-                )}
-              />
-            </ResponsiveWrapper>
-          </div>
-        </section>
-        <section className={styles.formGroup}>
           <span className={styles.heading}>{t("service", "Service")}</span>
           <ResponsiveWrapper isTablet={isTablet}>
             <Controller
@@ -380,8 +343,8 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
                     setValue(
                       "duration",
                       services?.find(
-                        (service) => service.name === event.target.value
-                      )?.durationMins
+                        (service) => service.name === event.target.value,
+                      )?.durationMins,
                     );
                   }}
                   onBlur={onBlur}
@@ -423,7 +386,7 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
                   invalidText="Required"
                   labelText={t(
                     "selectAppointmentType",
-                    "Select the type of appointment"
+                    "Select the type of appointment",
                   )}
                   onChange={onChange}
                   value={value}
@@ -460,7 +423,7 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
             labelA={t("no", "No")}
             labelText={t(
               "isRecurringAppointment",
-              "Is this a recurring appoinment?"
+              "Is this a recurring appoinment?",
             )}
             onClick={() => setIsRecurringAppointment(!isRecurringAppointment)}
           />
@@ -490,10 +453,10 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
                               startDate: new Date(startDate),
                               recurringPatternEndDate: new Date(endDate),
                               recurringPatternEndDateText: dayjs(
-                                new Date(endDate)
+                                new Date(endDate),
                               ).format(dateFormat),
                               startDateText: dayjs(new Date(startDate)).format(
-                                dateFormat
+                                dateFormat,
                               ),
                             });
                           }}
@@ -600,7 +563,7 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
                           }}
                           initialSelectedItems={weekDays.filter((i) => {
                             return getValues(
-                              "recurringPatternDaysOfWeek"
+                              "recurringPatternDaysOfWeek",
                             ).includes(i.id);
                           })}
                           onChange={(e) => {
@@ -666,11 +629,11 @@ const AppointmentsForm: React.FC<AppointmentsFormProps> = ({
                   value={value}
                   labelText={t(
                     "appointmentNoteLabel",
-                    "Write an additional note"
+                    "Write an additional note",
                   )}
                   placeholder={t(
                     "appointmentNotePlaceholder",
-                    "Write any additional points here"
+                    "Write any additional points here",
                   )}
                   onChange={onChange}
                   onBlur={onBlur}

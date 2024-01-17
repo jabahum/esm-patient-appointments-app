@@ -64,7 +64,7 @@ const AppointmentsTable: React.FC<AppointmentTableProps> = ({
       { key: "type", header: t("type", "Type") },
       { key: "notes", header: t("notes", "Notes") },
     ],
-    [t]
+    [t],
   );
 
   const tableRows = useMemo(
@@ -86,7 +86,7 @@ const AppointmentsTable: React.FC<AppointmentTableProps> = ({
           notes: appointment.comments ? appointment.comments : "——",
         };
       }),
-    [paginatedAppointments]
+    [paginatedAppointments],
   );
 
   return (
@@ -107,7 +107,7 @@ const AppointmentsTable: React.FC<AppointmentTableProps> = ({
                     <TableHeader
                       className={classNames(
                         styles.productiveHeading01,
-                        styles.text02
+                        styles.text02,
                       )}
                       {...getHeaderProps({
                         header,

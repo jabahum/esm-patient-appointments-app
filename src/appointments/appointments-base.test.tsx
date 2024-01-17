@@ -2,13 +2,13 @@ import React from "react";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { openmrsFetch, usePagination } from "@openmrs/esm-framework";
-import { mockAppointmentsData } from "../__mocks__/appointments.mock";
+import { mockAppointmentsData } from "../../__mocks__/appointments.mock";
 import {
   mockPatient,
-  patientChartBasePath,
   renderWithSwr,
   waitForLoadingToFinish,
-} from "../../../../tools/test-helpers";
+  patientChartBasePath,
+} from "../../tools/test-helpers";
 import AppointmentsBase from "./appointments-base.component";
 
 const testProps = {
@@ -41,7 +41,7 @@ describe("AppointmensOverview", () => {
     await waitForLoadingToFinish();
 
     expect(
-      screen.getByRole("heading", { name: /appointments/i })
+      screen.getByRole("heading", { name: /appointments/i }),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /add/i })).toBeInTheDocument();
   });
@@ -64,12 +64,12 @@ describe("AppointmensOverview", () => {
     await waitForLoadingToFinish();
 
     expect(
-      screen.getByRole("heading", { name: /appointments/i })
+      screen.getByRole("heading", { name: /appointments/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Sorry, there was a problem displaying this information. You can try to reload this page, or contact the site administrator and quote the error code above."
-      )
+        "Sorry, there was a problem displaying this information. You can try to reload this page, or contact the site administrator and quote the error code above.",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -88,7 +88,7 @@ describe("AppointmensOverview", () => {
     await waitForLoadingToFinish();
 
     expect(
-      screen.getByRole("heading", { name: /appointments/i })
+      screen.getByRole("heading", { name: /appointments/i }),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /add/i })).toBeInTheDocument();
 
@@ -98,14 +98,14 @@ describe("AppointmensOverview", () => {
     const pastAppointmentsTab = screen.getByRole("tab", { name: /past/i });
 
     expect(screen.getByRole("tablist")).toContainElement(
-      upcomingAppointmentsTab
+      upcomingAppointmentsTab,
     );
     expect(screen.getByRole("tablist")).toContainElement(pastAppointmentsTab);
     expect(screen.getByTitle(/Empty data illustration/i)).toBeInTheDocument();
     expect(
       screen.getByText(
-        /There are no upcoming appointments to display for this patient/i
-      )
+        /There are no upcoming appointments to display for this patient/i,
+      ),
     ).toBeInTheDocument();
 
     await user.click(pastAppointmentsTab);
@@ -114,7 +114,7 @@ describe("AppointmensOverview", () => {
     const expectedColumnHeaders = [/date/, /location/, /service/];
     expectedColumnHeaders.forEach((header) => {
       expect(
-        screen.getByRole("columnheader", { name: new RegExp(header, "i") })
+        screen.getByRole("columnheader", { name: new RegExp(header, "i") }),
       ).toBeInTheDocument();
     });
 

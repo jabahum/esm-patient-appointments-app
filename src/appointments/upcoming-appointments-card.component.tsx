@@ -80,7 +80,7 @@ const UpcomingAppointmentsCard: React.FC<UpcomingAppointmentsProps> = ({
               key={i}
               labelText=""
               defaultChecked={dayjs(
-                new Date(appointment.startDateTime).toISOString()
+                new Date(appointment.startDateTime).toISOString(),
               ).isToday()}
               id={appointment.uuid}
               onChange={(e) =>

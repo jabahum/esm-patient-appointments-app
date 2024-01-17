@@ -15,7 +15,7 @@ const appointmentsSearchUrl = `/ws/rest/v1/appointments/search`;
 export function useAppointments(
   patientUuid: string,
   startDate: string,
-  abortController: AbortController
+  abortController: AbortController,
 ) {
   /*
     SWR isn't meant to make POST requests for data fetching. This is a consequence of the API only exposing this resource via POST.
@@ -46,22 +46,22 @@ export function useAppointments(
     ?.filter(({ status }) => status !== "Cancelled")
     ?.filter(({ startDateTime }) =>
       dayjs(new Date(startDateTime).toISOString()).isBefore(
-        new Date().setHours(0, 0, 0, 0)
-      )
+        new Date().setHours(0, 0, 0, 0),
+      ),
     );
 
   const upcomingAppointments = appointments
     ?.sort((a, b) => (a.startDateTime > b.startDateTime ? 1 : -1))
     ?.filter(({ status }) => status !== "Cancelled")
     ?.filter(({ startDateTime }) =>
-      dayjs(new Date(startDateTime).toISOString()).isAfter(new Date())
+      dayjs(new Date(startDateTime).toISOString()).isAfter(new Date()),
     );
 
   const todaysAppointments = appointments
     ?.sort((a, b) => (a.startDateTime > b.startDateTime ? 1 : -1))
     ?.filter(({ status }) => status !== "Cancelled")
     ?.filter(({ startDateTime }) =>
-      dayjs(new Date(startDateTime).toISOString()).isToday()
+      dayjs(new Date(startDateTime).toISOString()).isToday(),
     );
 
   return {
@@ -90,7 +90,7 @@ export function useAppointmentService() {
 
 export function saveAppointment(
   appointment: AppointmentPayload,
-  abortController: AbortController
+  abortController: AbortController,
 ) {
   return openmrsFetch(`/ws/rest/v1/appointment`, {
     method: "POST",
@@ -104,7 +104,7 @@ export function saveAppointment(
 
 export function saveRecurringAppointments(
   recurringAppointments: RecurringAppointmentsPayload,
-  abortController: AbortController
+  abortController: AbortController,
 ) {
   return openmrsFetch(`/ws/rest/v1/recurring-appointments`, {
     method: "POST",
@@ -118,7 +118,7 @@ export function saveRecurringAppointments(
 
 export function getAppointmentsByUuid(
   appointmentUuid: string,
-  abortController: AbortController
+  abortController: AbortController,
 ) {
   return openmrsFetch(`/ws/rest/v1/appointments/${appointmentUuid}`, {
     signal: abortController.signal,
@@ -134,7 +134,7 @@ export function getAppointmentService(abortController: AbortController, uuid) {
 export const cancelAppointment = async (
   toStatus: string,
   appointmentUuid: string,
-  ac: AbortController
+  ac: AbortController,
 ) => {
   const omrsDateFormat = "YYYY-MM-DDTHH:mm:ss.SSSZZ";
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;

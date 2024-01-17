@@ -19,7 +19,7 @@ const CancelAppointmentModal: React.FC<CancelAppointmentModalProps> = ({
   const { mutate } = useAppointments(
     patientUuid,
     new Date().toUTCString(),
-    new AbortController()
+    new AbortController(),
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -37,7 +37,7 @@ const CancelAppointmentModal: React.FC<CancelAppointmentModalProps> = ({
             kind: "success",
             subtitle: t(
               "appointmentCancelledSuccessfully",
-              "Appointment cancelled successfully"
+              "Appointment cancelled successfully",
             ),
             title: t("appointmentCancelled", "Appointment cancelled"),
           });
@@ -63,7 +63,7 @@ const CancelAppointmentModal: React.FC<CancelAppointmentModalProps> = ({
         <p>
           {t(
             "cancelAppointmentModalConfirmationText",
-            "Are you sure you want to cancel this appointment?"
+            "Are you sure you want to cancel this appointment?",
           )}
         </p>
       </ModalBody>

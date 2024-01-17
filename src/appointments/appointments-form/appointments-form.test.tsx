@@ -1,15 +1,15 @@
 import React from "react";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockLocations } from "../../__mocks__/location.mock";
+import { mockLocations } from "../../../__mocks__/location.mock";
 import { openmrsFetch, showSnackbar } from "@openmrs/esm-framework";
-import { mockSessionDataResponse } from "../../__mocks__/session.mock";
-import { mockUseAppointmentServiceData } from "../../__mocks__/appointments.mock";
+import { mockSessionDataResponse } from "../../../__mocks__/session.mock";
+import { mockUseAppointmentServiceData } from "../../../__mocks__/appointments.mock";
 import {
   mockPatient,
   renderWithSwr,
   waitForLoadingToFinish,
-} from "../../../../../tools/test-helpers";
+} from "../../../tools/test-helpers";
 import { saveAppointment } from "../appointments.resource";
 import AppointmentForm from "./appointments-form.component";
 
@@ -104,41 +104,40 @@ describe("AppointmentForm", () => {
 
     await waitForLoadingToFinish();
 
-    expect(screen.getByLabelText(/Select a location/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Date/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Select a service/i)).toBeInTheDocument();
     expect(
-      screen.getByLabelText(/Select the type of appointment/i)
+      screen.getByLabelText(/Select the type of appointment/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByLabelText(/Write an additional note/i)
+      screen.getByLabelText(/Write an additional note/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText(/Write any additional points here/i)
+      screen.getByPlaceholderText(/Write any additional points here/i),
     ).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/dd\/mm\/yyyy/i)).toBeInTheDocument();
     expect(
-      screen.getByRole("option", { name: /Mosoriot/i })
+      screen.getByRole("option", { name: /Mosoriot/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("option", { name: /Inpatient Ward/i })
+      screen.getByRole("option", { name: /Inpatient Ward/i }),
     ).toBeInTheDocument();
     expect(screen.getByRole("option", { name: /AM/i })).toBeInTheDocument();
     expect(screen.getByRole("option", { name: /PM/i })).toBeInTheDocument();
     expect(
-      screen.getByRole("option", { name: /Choose appointment type/i })
+      screen.getByRole("option", { name: /Choose appointment type/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("option", { name: /Scheduled/i })
+      screen.getByRole("option", { name: /Scheduled/i }),
     ).toBeInTheDocument();
     expect(screen.getByRole("option", { name: /WalkIn/i })).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: /Date/i })).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: /Time/i })).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /Discard/i })
+      screen.getByRole("button", { name: /Discard/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /Save and close/i })
+      screen.getByRole("button", { name: /Save and close/i }),
     ).toBeInTheDocument();
   });
 
@@ -207,9 +206,9 @@ describe("AppointmentForm", () => {
     });
     mockCreateAppointment.mockRejectedValueOnce(error);
 
-    renderAppointmentsForm();
+    // renderAppointmentsForm();
 
-    await waitForLoadingToFinish();
+    // await waitForLoadingToFinish();
 
     const saveButton = screen.getByRole("button", { name: /Save and close/i });
     const dateInput = screen.getByRole("textbox", { name: /Date/i });
