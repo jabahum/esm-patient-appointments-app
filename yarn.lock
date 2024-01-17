@@ -2707,10 +2707,10 @@
     uuid "^9.0.0"
     workbox-window "^6.1.5"
 
-"@openmrs/esm-patient-common-lib@next":
-  version "6.1.1-pre.3402"
-  resolved "https://registry.yarnpkg.com/@openmrs/esm-patient-common-lib/-/esm-patient-common-lib-6.1.1-pre.3402.tgz#365949e4fd9885508e89d3b8182425f165e48a12"
-  integrity sha512-2VnxDXaiBFWY68K0fnstUD6iyCjzHnE2h1ZkEVtHON7yZJj+chXglxeBTItHeY0am+rzCmATeOJdMjlsF54JNA==
+"@openmrs/esm-patient-common-lib@6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@openmrs/esm-patient-common-lib/-/esm-patient-common-lib-6.1.0.tgz#b4abc47806cb4f11ddf104b5a8d3b07dcc5cdc15"
+  integrity sha512-9Y3dN1CbVMwDg9RP67zPJtjFqzwj7v3fgNnESlRM1Jj5SOgSz513GAg0vpRR+hsmwSwgtcrqlEmxp2bxYvcpvw==
   dependencies:
     "@carbon/react" "^1.12.0"
     lodash-es "^4.17.21"
