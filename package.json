@@ -45,16 +45,16 @@
     "url": "https://github.com/METS-Programme/esm-patient-appointments-app/issues"
   },
   "dependencies": {
-    "lodash-es": "^4.17.21",
     "@hookform/resolvers": "^3.3.0",
+    "classnames": "^2.3.2",
     "file-saver": "^2.0.5",
+    "lodash-es": "^4.17.21",
     "react-hook-form": "^7.45.4",
     "react-image-annotate": "^1.8.0",
     "swr": "^2.2.1",
+    "xlsx": "^0.18.5",
     "yup": "^1.2.0",
-    "zod": "^3.22.2",
-    "classnames": "^2.3.2",
-    "xlsx": "^0.18.5"
+    "zod": "^3.22.2"
   },
   "peerDependencies": {
     "dayjs": "1.x",
@@ -65,8 +65,8 @@
     "swr": "2.x"
   },
   "devDependencies": {
-    "@carbon/react": "^1.33.1",
     "@babel/core": "^7.11.6",
+    "@carbon/react": "^1.33.1",
     "@openmrs/esm-framework": "next",
     "@openmrs/esm-patient-common-lib": "6.1.0",
     "@playwright/test": "1.40.1",
