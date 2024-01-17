@@ -26,7 +26,7 @@ export const AppointmentsActionMenu = ({
         appointment,
         context: "editing",
       }),
-    [appointment, t]
+    [appointment, t],
   );
 
   const launchCancelAppointmentDialog = () => {
