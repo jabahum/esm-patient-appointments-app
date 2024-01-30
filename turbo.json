@@ -1,25 +1,17 @@
 {
-  "$schema": "https://turborepo.org/schema.json",
+  "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"]  
+      "outputs": [".next/**", "!.next/cache/**"]
     },
-    "test": {
-      "dependsOn": ["^test"]
+    "lint": {},
+    "extract-translations": {
+      "outputs": ["./translations/*"]
     },
-    "test:watch": {
-      "dependsOn": ["^test:watch"]
-    },
+    "test": {},
     "coverage": {
-      "dependsOn": ["^coverage"]
+      "outputs": ["coverage/**"]
     },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "typescript": {
-      "dependsOn": ["^typescript"]
-    },
-    "extract-translations": {}
+    "typescript": {}
   }
 }
